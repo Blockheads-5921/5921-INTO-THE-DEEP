@@ -15,16 +15,24 @@ abstract class InheritableTeleOp : OpMode() {
     private lateinit var dashboard: FtcDashboard
     private var dashboardTelemetry: Telemetry? = null
     val time: ElapsedTime = ElapsedTime()
+    private var clawState = ClawStates.CLOSED
+
 
     override fun init() {
         robot = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
         dashboard = FtcDashboard.getInstance()
         dashboardTelemetry = dashboard.telemetry
 
-//        callableIteration<DcMotorEx>(
-//            robot!!,
-//            ::resetMotor
-//        )
+        callableIteration<DcMotorEx>(
+            robot!!,
+            ::resetMotor,
+            listOf(
+                "leftFront",
+                "leftBack",
+                "rightFront",
+                "rightBack"
+            )
+        )
     }
 
     override fun loop() {}
@@ -51,12 +59,37 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.rightFront.power = rightFrontPower
         robot!!.rightBack.power = rightBackPower
     }
+    fun claw() {
+        if (gamepad2.a) {
+            if (clawState == ClawStates.CLOSED) {
+                robot!!.transversal.position = 0.3
+                clawState = ClawStates.OPEN
+            } else if (clawState == ClawStates.OPEN) {
+                robot!!.transversal.position = 0.55
+                clawState = ClawStates.CLOSED
+            }
+        }
+    }
+
     fun safeMode() {
         robot!!.lifter.targetPosition = 560
         robot!!.lifter.power = 0.5
         robot!!.boom.targetPosition = 100
         robot!!.boom.power = 0.99
     }
+    fun highChamber() {
+        robot!!.boom.targetPosition = 281
+        robot!!.boom.power = 0.99
+        robot!!.lifter.targetPosition = 1100
+        robot!!.lifter.power = 0.45
+    }
+    fun highBasket() {
+        robot!!.lifter.targetPosition = 1520
+        robot!!.lifter.power = 0.99
+        robot!!.boom.targetPosition = 2200
+        robot!!.boom.power = .99
+    }
+
     fun power(): Double {
         if (gamepad1.right_bumper) return 0.75
         if (gamepad1.right_trigger > 0.0) return 0.5
@@ -68,5 +101,10 @@ abstract class InheritableTeleOp : OpMode() {
         motor.targetPosition = 0
         motor.mode = DcMotor.RunMode.RUN_TO_POSITION
         motor.power = 0.0;
+    }
+
+    enum class ClawStates {
+        CLOSED,
+        OPEN
     }
 }
