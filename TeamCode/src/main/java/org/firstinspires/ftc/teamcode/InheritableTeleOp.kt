@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import kotlin.math.abs
 import kotlin.math.pow
 
 abstract class InheritableTeleOp : OpMode() {
-    private var robot: MecanumDrive? = null
+    protected var robot: MecanumDrive? = null
     private lateinit var dashboard: FtcDashboard
     private var dashboardTelemetry: Telemetry? = null
     val time: ElapsedTime = ElapsedTime()
@@ -18,6 +20,11 @@ abstract class InheritableTeleOp : OpMode() {
         robot = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
         dashboard = FtcDashboard.getInstance()
         dashboardTelemetry = dashboard.telemetry
+
+//        callableIteration<DcMotorEx>(
+//            robot!!,
+//            ::resetMotor
+//        )
     }
 
     override fun loop() {}
@@ -43,5 +50,23 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.leftBack.power = leftBackPower
         robot!!.rightFront.power = rightFrontPower
         robot!!.rightBack.power = rightBackPower
+    }
+    fun safeMode() {
+        robot!!.lifter.targetPosition = 560
+        robot!!.lifter.power = 0.5
+        robot!!.boom.targetPosition = 100
+        robot!!.boom.power = 0.99
+    }
+    fun power(): Double {
+        if (gamepad1.right_bumper) return 0.75
+        if (gamepad1.right_trigger > 0.0) return 0.5
+        else return 1.0
+    }
+    fun resetMotor(motor: DcMotorEx) {
+        motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motor.targetPosition = 0
+        motor.mode = DcMotor.RunMode.RUN_TO_POSITION
+        motor.power = 0.0;
     }
 }

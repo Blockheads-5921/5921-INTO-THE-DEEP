@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -108,6 +109,8 @@ public final class MecanumDrive {
             new ProfileAccelConstraint(PARAMS.minProfileAccel, PARAMS.maxProfileAccel);
 
     public final DcMotorEx leftFront, leftBack, rightBack, rightFront;
+    public final DcMotorEx boom, lifter, stageOne, stageTwo;
+    public final Servo transversal, rightLock, leftLock;
 
     public final VoltageSensor voltageSensor;
 
@@ -222,10 +225,19 @@ public final class MecanumDrive {
 
         // TODO: make sure your config has motors with these names (or change them)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        leftFront = hardwareMap.get(DcMotorEx.class, "lf");
-        leftBack = hardwareMap.get(DcMotorEx.class, "lb");
-        rightBack = hardwareMap.get(DcMotorEx.class, "rb");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rf");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftBack = hardwareMap.get(DcMotorEx.class, "leftBack");
+        rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+
+        boom = hardwareMap.get(DcMotorEx.class, "boom");
+        lifter = hardwareMap.get(DcMotorEx.class, "lifter");
+        stageOne = hardwareMap.get(DcMotorEx.class, "stage1");
+        stageTwo = hardwareMap.get(DcMotorEx.class, "stage2");
+
+        transversal = hardwareMap.get(Servo.class, "transversal");
+        rightLock = hardwareMap.get(Servo.class, "rightLock");
+        leftLock = hardwareMap.get(Servo.class, "leftLock");
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
