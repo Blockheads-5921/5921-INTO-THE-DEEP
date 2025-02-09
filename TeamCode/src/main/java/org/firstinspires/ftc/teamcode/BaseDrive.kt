@@ -14,9 +14,10 @@ class BaseDrive : InheritableTeleOp() {
         drive(power())
         claw()
 
-        if (gamepad2.y) highChamber()
-        if (gamepad2.x) safeMode()
-        if (gamepad2.dpad_up) highBasket()
+        if (gamepad2.x) highChamber()
+        if (gamepad2.dpad_up) safeMode()
+        if (gamepad2.dpad_right) highBasket()
+        if (gamepad2.dpad_down) submersible()
 
         dashboardTelemetry!!.addData("left front:", robot!!.leftFront.power)
         dashboardTelemetry!!.addData("left back:", robot!!.leftBack.power)

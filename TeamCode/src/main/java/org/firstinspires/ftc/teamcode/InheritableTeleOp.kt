@@ -93,6 +93,12 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.boom.targetPosition = 2200
         robot!!.boom.power = .99
     }
+    fun submersible() {
+        robot!!.lifter.targetPosition = 490
+        robot!!.lifter.power = 0.2
+        robot!!.boom.targetPosition = 2300
+        robot!!.boom.power = .99
+    }
 
     fun power(): Double {
         if (gamepad1.right_bumper) return 0.75
