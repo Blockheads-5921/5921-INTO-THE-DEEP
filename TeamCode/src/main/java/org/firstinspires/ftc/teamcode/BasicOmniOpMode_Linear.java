@@ -106,13 +106,13 @@ public class BasicOmniOpMode_Linear extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
-        particleInOut = hardwareMap.get(Servo.class, "sample_input");
-        rightlock = hardwareMap.get(Servo.class, "rightlock");
-        leftlock = hardwareMap.get(Servo.class, "leftlock");
+        particleInOut = hardwareMap.get(Servo.class, "transversal");
+        rightlock = hardwareMap.get(Servo.class, "rightLock");
+        leftlock = hardwareMap.get(Servo.class, "leftLock");
         lifter = hardwareMap.get(DcMotor.class, "lifter");
         boom = hardwareMap.get(DcMotor.class, "boom");
-        lowclimb = hardwareMap.get(DcMotor.class, "low_winch");
-        highclimb = hardwareMap.get(DcMotor.class, "high_winch");
+        lowclimb = hardwareMap.get(DcMotor.class, "stage1");
+        highclimb = hardwareMap.get(DcMotor.class, "stage2");
 
         //Lock flags
         boolean dpadUpLock = false;

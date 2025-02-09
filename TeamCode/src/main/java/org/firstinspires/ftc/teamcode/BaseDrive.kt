@@ -23,7 +23,7 @@ class BaseDrive : InheritableTeleOp() {
             submersibleOut()
             lock = true
         }
-        else if (!gamepad2.dpad_down && !robot!!.lifter.isBusy && !robot!!.boom.isBusy) {
+        else if (!gamepad2.dpad_down && lock && !robot!!.lifter.isBusy && !robot!!.boom.isBusy) {
             submersibleDown()
             lock = false
         }
