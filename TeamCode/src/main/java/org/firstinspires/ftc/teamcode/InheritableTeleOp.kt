@@ -63,15 +63,15 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.rightFront.power = rightFrontPower
         robot!!.rightBack.power = rightBackPower
     }
+
     fun claw() {
-        if (gamepad2.a) {
-            if (clawState == ClawStates.CLOSED) {
-                robot!!.transversal.position = 0.3
-                clawState = ClawStates.OPEN
-            } else if (clawState == ClawStates.OPEN) {
-                robot!!.transversal.position = 0.55
-                clawState = ClawStates.CLOSED
-            }
+        if (gamepad2.left_bumper) {
+            robot!!.transversal.position = 0.3
+            clawState = ClawStates.OPEN
+        }
+        if (gamepad2.right_bumper) {
+            robot!!.transversal.position = 0.55
+            clawState = ClawStates.CLOSED
         }
     }
 
@@ -81,30 +81,38 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.boom.targetPosition = 100
         robot!!.boom.power = 0.99
     }
+
     fun highChamber() {
         robot!!.boom.targetPosition = 281
         robot!!.boom.power = 0.99
         robot!!.lifter.targetPosition = 1100
         robot!!.lifter.power = 0.45
     }
+
     fun highBasket() {
         robot!!.lifter.targetPosition = 1520
         robot!!.lifter.power = 0.99
         robot!!.boom.targetPosition = 2200
         robot!!.boom.power = .99
     }
-    fun submersible() {
+
+    fun submersibleOut() {
         robot!!.lifter.targetPosition = 490
         robot!!.lifter.power = 0.2
         robot!!.boom.targetPosition = 2300
         robot!!.boom.power = .99
     }
 
-    fun power(): Double {
-        if (gamepad1.right_bumper) return 0.75
-        if (gamepad1.right_trigger > 0.0) return 0.5
-        else return 1.0
+    fun submersibleDown() {
+        robot!!.lifter.targetPosition = 297
+        robot!!.lifter.power = .75
     }
+
+    fun power(): Double {
+        return if (gamepad1.a) 0.5
+        else 1.0
+    }
+
     fun resetMotor(motor: DcMotorEx) {
         motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
