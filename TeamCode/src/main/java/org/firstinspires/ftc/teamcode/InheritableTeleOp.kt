@@ -18,6 +18,8 @@ abstract class InheritableTeleOp : OpMode() {
     val time: ElapsedTime = ElapsedTime()
     private var clawState = ClawStates.CLOSED
 
+    private var slow = false
+
 
     override fun init() {
         robot = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
@@ -109,8 +111,8 @@ abstract class InheritableTeleOp : OpMode() {
     }
 
     fun power(): Double {
-        return if (gamepad1.a) 0.5
-        else 1.0
+        if (gamepad1.a) slow = !slow
+        return if (slow) 0.5 else 1.0
     }
 
     fun resetMotor(motor: DcMotorEx) {
