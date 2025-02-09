@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import kotlin.math.abs
@@ -13,7 +14,7 @@ import kotlin.math.pow
 abstract class InheritableTeleOp : OpMode() {
     protected var robot: MecanumDrive? = null
     private lateinit var dashboard: FtcDashboard
-    private var dashboardTelemetry: Telemetry? = null
+    protected var dashboardTelemetry: Telemetry? = null
     val time: ElapsedTime = ElapsedTime()
     private var clawState = ClawStates.CLOSED
 
@@ -33,6 +34,9 @@ abstract class InheritableTeleOp : OpMode() {
                 "rightBack"
             )
         )
+
+        robot!!.lifter.direction = DcMotorSimple.Direction.REVERSE
+        robot!!.boom.direction = DcMotorSimple.Direction.REVERSE
     }
 
     override fun loop() {}
@@ -72,7 +76,7 @@ abstract class InheritableTeleOp : OpMode() {
     }
 
     fun safeMode() {
-        robot!!.lifter.targetPosition = 560
+        robot!!.lifter.targetPosition = 600
         robot!!.lifter.power = 0.5
         robot!!.boom.targetPosition = 100
         robot!!.boom.power = 0.99
