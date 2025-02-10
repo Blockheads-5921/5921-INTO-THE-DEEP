@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import java.lang.reflect.Field
 
 
-inline fun <reified T: Any> callableIteration(obj: Any, method: (T) -> Unit, exclusions: List<String> = listOf()) {
+inline fun <reified T : Any> callableIteration(
+    obj: Any,
+    method: (T) -> Unit,
+    exclusions: List<String> = listOf()
+) {
     val fields: Array<Field> = obj.javaClass.declaredFields
     for (field in fields) {
         if (field.type == T::class.java) {
@@ -32,7 +36,7 @@ class Button {
     private var state: States? = null
     private var lastTapped: Long = -1
 
-    fun Button() {
+    init {
         state = States.NOT_INITIALIZED
     }
 
@@ -66,7 +70,11 @@ class Button {
         return state as States
     }
 
-    fun `is`(state: States): Boolean {
+    fun state(state: States): Boolean {
         return this.state == state
+    }
+
+    fun tapped(): Boolean {
+        return this.state == States.TAP
     }
 }
