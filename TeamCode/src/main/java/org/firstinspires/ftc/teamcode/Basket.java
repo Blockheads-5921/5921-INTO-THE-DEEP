@@ -29,6 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+
+
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
@@ -42,7 +46,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Autonomous(name = "Basket", group = "Autonomous")
+@Disabled
 public class Basket extends LinearOpMode {
+
 
     public void setLifterBoom(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
         lifter.setTargetPosition(lifterVal);

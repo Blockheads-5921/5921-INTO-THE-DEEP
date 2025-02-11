@@ -49,6 +49,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @Autonomous(name = "Red_f4", group = "Autonomous")
+@Disabled
 public class Red_F4 extends LinearOpMode {
 
     public void setLifterBoom(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {

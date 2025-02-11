@@ -72,7 +72,7 @@ import org.slf4j.LoggerFactory;
  */
 
 @TeleOp(name = "ClimbTGest", group = "Linear OpMode")
-@Disabled
+
 public class ClimbTest extends LinearOpMode {
 
 
@@ -196,22 +196,23 @@ public class ClimbTest extends LinearOpMode {
 
         startTime = System.currentTimeMillis();
         runtime.reset();
-       
+
+        while (opModeIsActive()) {
             if (gamepad2.dpad_up) {
                 log.info("dpadup pressed - ligter " + lifter.isBusy() + ", boom " + boom.isBusy() + ", boom pos " + boom.getCurrentPosition() + ", dpadUpLock " + dpadUpLock);
             }
             if (gamepad2.dpad_up && !dpadUpLock) {//Ok, now go to safe mode
                 dpadUpLock = true;
                 log.info("Safe Mode: boom position = " + boom.getCurrentPosition());
-                lifter.setTargetPosition(-560);
-                lifter.setPower(0.5);
+                lifter.setTargetPosition(-800);
+                lifter.setPower(1.0);
                 boom.setTargetPosition(100);
                 boom.setPower(.99);
             } else if (!gamepad2.dpad_up && dpadUpLock && !lifter.isBusy() && !boom.isBusy()) {
                 dpadUpLock = false;
             }
         }
-    }
+    }}
 
 
 
