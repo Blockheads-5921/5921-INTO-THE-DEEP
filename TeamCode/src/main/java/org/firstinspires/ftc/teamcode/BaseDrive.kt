@@ -15,6 +15,7 @@ class BaseDrive : InheritableTeleOp() {
         updateButtons()
         drive(power())
         claw()
+        submersible()
 
         if (x.tapped()) highChamber()
         if (dpadUp.tapped()) safeMode()

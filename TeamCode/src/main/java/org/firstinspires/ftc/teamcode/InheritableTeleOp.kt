@@ -18,15 +18,14 @@ abstract class InheritableTeleOp : OpMode() {
     val time: ElapsedTime = ElapsedTime()
 
     private var clawState = ClawStates.CLOSED
+    private var lifterBoomStates = LifterBoomStates.REST
     private var slow = false
-
-    private var lowerable = false
 
     protected var a = Button()
     protected var x = Button()
     protected var dpadUp = Button()
     protected var dpadRight = Button()
-    protected var dpadDown = Button()
+    private var dpadDown = Button()
     private var leftBumper = Button()
     private var rightBumper = Button()
 
@@ -87,38 +86,42 @@ abstract class InheritableTeleOp : OpMode() {
     }
 
     fun safeMode() {
-        robot!!.lifter.targetPosition = 442 //600
-        robot!!.lifter.power = 0.99
-
-        robot!!.boom.targetPosition = 38//100
+        robot!!.lifter.targetPosition = 442 // 600
+        robot!!.lifter.power = 0.5
+        robot!!.boom.targetPosition = 38 // 100
         robot!!.boom.power = 0.99
+        lifterBoomStates = LifterBoomStates.SAFE_MODE
     }
     fun highChamber() {
-        robot!!.boom.targetPosition = 106 //281
+        robot!!.boom.targetPosition = 106 // 281
         robot!!.boom.power = 0.99
-        robot!!.lifter.targetPosition = 811 //1100
+        robot!!.lifter.targetPosition = 811 // 1100
         robot!!.lifter.power = 0.45
+        lifterBoomStates = LifterBoomStates.HIGH_CHAMBER
     }
     fun highBasket() {
-        robot!!.lifter.targetPosition = 1121 //1520
-        robot!!.lifter.power = 0.99
-        robot!!.boom.targetPosition = 868 //2300
+        robot!!.lifter.targetPosition = 1121 // 1520
+        robot!!.lifter.power = 0.8
+        robot!!.boom.targetPosition = 868 // 2300
         robot!!.boom.power = .99
+        lifterBoomStates = LifterBoomStates.HIGH_BASKET
     }
 
     fun submersible() {
         if (dpadDown.tapped()) {
-            robot!!.lifter.targetPosition = 361 //490
-            robot!!.lifter.power = 0.2
-            robot!!.boom.targetPosition = 868 //2300
-            robot!!.boom.power = .99
-            lowerable = true
+            if (lifterBoomStates != (LifterBoomStates.SUBMERSIBLE_MID)) {
+                robot!!.lifter.targetPosition = 361 // 490
+                robot!!.lifter.power = 0.2
+                robot!!.boom.targetPosition = 868 // 2300
+                robot!!.boom.power = .99
+                lifterBoomStates = LifterBoomStates.SUBMERSIBLE_MID
+            }
+            if (lifterBoomStates == LifterBoomStates.SUBMERSIBLE_MID) {
+                robot!!.lifter.targetPosition = 219 // 297
+                robot!!.lifter.power = .75
+                LifterBoomStates.SUBMERSIBLE_DOWN
+            }
         }
-        if (lowerable && !robot!!.boom.isBusy) {
-            robot!!.lifter.targetPosition = 219 //297
-            robot!!.lifter.power = .75
-        }
-        if (robot!!.lifter.currentPosition == 219 || robot!!.lifter.currentPosition > 361 + 5) lowerable = false
     }
 
     fun power(): Double {
@@ -145,5 +148,13 @@ abstract class InheritableTeleOp : OpMode() {
     enum class ClawStates {
         CLOSED,
         OPEN
+    }
+    enum class LifterBoomStates {
+        REST,
+        SAFE_MODE,
+        HIGH_CHAMBER,
+        HIGH_BASKET,
+        SUBMERSIBLE_MID,
+        SUBMERSIBLE_DOWN
     }
 }
