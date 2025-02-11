@@ -19,6 +19,7 @@ class BaseDrive : InheritableTeleOp() {
         if (x.tapped()) highChamber()
         if (dpadUp.tapped()) safeMode()
         if (dpadRight.tapped()) highBasket()
+        if (dpadDown.tapped()) submersible()
     }
 
 }
