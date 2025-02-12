@@ -18,7 +18,7 @@ abstract class InheritableTeleOp : OpMode() {
     val time: ElapsedTime = ElapsedTime()
 
     private var clawState = ClawStates.CLOSED
-    private var lifterBoomStates = LifterBoomStates.REST
+    protected var lifterBoomState = LifterBoomStates.REST
     private var slow = false
 
     protected var a = Button()
@@ -90,33 +90,33 @@ abstract class InheritableTeleOp : OpMode() {
         robot!!.lifter.power = 0.5
         robot!!.boom.targetPosition = 38 // 100
         robot!!.boom.power = 0.99
-        lifterBoomStates = LifterBoomStates.SAFE_MODE
+        lifterBoomState = LifterBoomStates.SAFE_MODE
     }
     fun highChamber() {
         robot!!.boom.targetPosition = 106 // 281
         robot!!.boom.power = 0.99
         robot!!.lifter.targetPosition = 811 // 1100
         robot!!.lifter.power = 0.45
-        lifterBoomStates = LifterBoomStates.HIGH_CHAMBER
+        lifterBoomState = LifterBoomStates.HIGH_CHAMBER
     }
     fun highBasket() {
         robot!!.lifter.targetPosition = 1121 // 1520
         robot!!.lifter.power = 0.8
         robot!!.boom.targetPosition = 868 // 2300
         robot!!.boom.power = .99
-        lifterBoomStates = LifterBoomStates.HIGH_BASKET
+        lifterBoomState = LifterBoomStates.HIGH_BASKET
     }
 
     fun submersible() {
         if (dpadDown.tapped()) {
-            if (lifterBoomStates != (LifterBoomStates.SUBMERSIBLE_MID)) {
-                robot!!.lifter.targetPosition = 361 // 490
+            if (lifterBoomState != (LifterBoomStates.SUBMERSIBLE_MID)) {
+                robot!!.lifter.targetPosition = 490 // 490
                 robot!!.lifter.power = 0.2
                 robot!!.boom.targetPosition = 868 // 2300
                 robot!!.boom.power = .99
-                lifterBoomStates = LifterBoomStates.SUBMERSIBLE_MID
+                lifterBoomState = LifterBoomStates.SUBMERSIBLE_MID
             }
-            if (lifterBoomStates == LifterBoomStates.SUBMERSIBLE_MID) {
+            if (lifterBoomState == LifterBoomStates.SUBMERSIBLE_MID) {
                 robot!!.lifter.targetPosition = 219 // 297
                 robot!!.lifter.power = .75
                 LifterBoomStates.SUBMERSIBLE_DOWN
