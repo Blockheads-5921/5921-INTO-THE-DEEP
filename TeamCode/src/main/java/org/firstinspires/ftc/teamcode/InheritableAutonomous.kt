@@ -33,10 +33,10 @@ class LifterBoom(hardwareMap: HardwareMap) {
 
     fun safeMode(): Action {
         return Action {
-            lifter.targetPosition = 600
+            lifter.targetPosition = Constants.Lifter.SAFE_MODE
             lifter.mode = DcMotor.RunMode.RUN_TO_POSITION
             lifter.power = 0.5
-            boom.targetPosition = 100
+            boom.targetPosition = Constants.Boom.HIGH_BASKET
             boom.mode = DcMotor.RunMode.RUN_TO_POSITION
             boom.power = 0.99
 
@@ -67,14 +67,14 @@ class Claw(hardwareMap: HardwareMap) {
 
     fun open(): Action {
         return Action {
-            claw.position = 0.3
+            claw.position = Constants.Claw.OPEN
             false
         }
     }
 
     fun close(): Action {
         return Action {
-            claw.position = 0.55
+            claw.position = Constants.Claw.CLOSED
             false
         }
     }

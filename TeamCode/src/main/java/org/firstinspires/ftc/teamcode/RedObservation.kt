@@ -30,6 +30,7 @@ class RedObservation() : InheritableAutonomous() {
                     specimenOnePreClip,
                     lifterBoom.setLifterBoom(811, 106)
                 ),
+                claw.open(),
                 lifterBoom.safeMode()
             )
         )
