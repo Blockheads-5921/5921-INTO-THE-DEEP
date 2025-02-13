@@ -49,7 +49,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @Autonomous(name = "Red_f4", group = "Autonomous")
-@Disabled
 public class Red_F4 extends LinearOpMode {
 
     public void setLifterBoom(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
@@ -89,9 +88,8 @@ public class Red_F4 extends LinearOpMode {
 
         final double GRAB = 0.55;
         final double RELEASE =0.3;
+
         final double waitTime = 1.0;
-
-
 
         //Move to high bar that will clip the specimen onto it and move back
         Action highBar = drive.actionBuilder(new Pose2d(8.5, -64.5, Math.toRadians(90)))

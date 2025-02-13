@@ -8,23 +8,29 @@ import com.acmerobotics.roadrunner.Vector2d
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
-@Autonomous(name = "Red Net", group = "Autonomous")
-class RedNet() : InheritableAutonomous() {
-    override var initialPose: Pose2d = Pose2d(0.0, 0.0, Math.toRadians(90.0))
+@Autonomous(name = "Red Observation", group = "Autonomous")
+class RedObservation() : InheritableAutonomous() {
+    override var initialPose: Pose2d = Pose2d(8.5, -64.5, Math.toRadians(90.0))
 
     val pi = Math.PI;
 
     override fun runOpMode() {
+        robot = MecanumDrive(hardwareMap, initialPose)
         val claw = Claw(hardwareMap)
         val lifterBoom = LifterBoom(hardwareMap)
 
         val specimenOnePreClip = robot.actionBuilder(initialPose)
-            .strafeTo(Vector2d(67.5, 8.5))
+            .lineToY(-36.0, TranslationalVelConstraint(11.0))
             .build()
 
         runBlocking(claw.close())
-        runBlocking(SequentialAction(
-            specimenOnePreClip
+        runBlocking(
+            SequentialAction(
+                ParallelAction(
+                    specimenOnePreClip,
+                    lifterBoom.setLifterBoom(811, 106)
+                ),
+                lifterBoom.safeMode()
             )
         )
     }

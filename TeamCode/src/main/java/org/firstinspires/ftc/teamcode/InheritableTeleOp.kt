@@ -12,7 +12,7 @@ import kotlin.math.abs
 import kotlin.math.pow
 
 abstract class InheritableTeleOp : OpMode() {
-    protected var robot: MecanumDrive? = null
+    protected lateinit var robot: MecanumDrive
     private lateinit var dashboard: FtcDashboard
     private var dashboardTelemetry: Telemetry? = null
     val time: ElapsedTime = ElapsedTime()
@@ -35,7 +35,7 @@ abstract class InheritableTeleOp : OpMode() {
         dashboardTelemetry = dashboard.telemetry
 
         callableIteration<DcMotorEx>(
-            robot!!,
+            robot,
             ::resetMotor,
             listOf(
                 "leftFront",
@@ -45,8 +45,8 @@ abstract class InheritableTeleOp : OpMode() {
             )
         )
 
-        robot!!.lifter.direction = DcMotorSimple.Direction.REVERSE
-        robot!!.boom.direction = DcMotorSimple.Direction.REVERSE
+        robot.lifter.direction = DcMotorSimple.Direction.REVERSE
+        robot.boom.direction = DcMotorSimple.Direction.REVERSE
     }
 
     override fun loop() {}
@@ -68,65 +68,66 @@ abstract class InheritableTeleOp : OpMode() {
         val rightFrontPower: Double = (-directionX + directionY - directionR) * power
         val rightBackPower: Double = (directionX + directionY - directionR) * power
 
-        robot!!.leftFront.power = leftFrontPower
-        robot!!.leftBack.power = leftBackPower
-        robot!!.rightFront.power = rightFrontPower
-        robot!!.rightBack.power = rightBackPower
+        robot.leftFront.power = leftFrontPower
+        robot.leftBack.power = leftBackPower
+        robot.rightFront.power = rightFrontPower
+        robot.rightBack.power = rightBackPower
     }
 
     fun claw() {
-        if (leftBumper.tapped()) {
-            robot!!.transversal.position = 0.3
-            clawState = ClawStates.OPEN
-        }
-        if (rightBumper.tapped()) {
-            robot!!.transversal.position = 0.55
-            clawState = ClawStates.CLOSED
+        if (a.tapped()) {
+            if (clawState == ClawStates.CLOSED) {
+                robot.transversal.position = 0.3
+                clawState = ClawStates.OPEN
+            } else if (clawState == ClawStates.OPEN) {
+                robot.transversal.position = 0.55
+                clawState = ClawStates.CLOSED
+            }
         }
     }
 
     fun safeMode() {
-        robot!!.lifter.targetPosition = 442 // 600
-        robot!!.lifter.power = 0.5
-        robot!!.boom.targetPosition = 38 // 100
-        robot!!.boom.power = 0.99
+        robot.lifter.targetPosition = 442 // 600
+        robot.lifter.power = 0.5
+        robot.boom.targetPosition = 38 // 100
+        robot.boom.power = 0.99
         lifterBoomState = LifterBoomStates.SAFE_MODE
     }
     fun highChamber() {
-        robot!!.boom.targetPosition = 106 // 281
-        robot!!.boom.power = 0.99
-        robot!!.lifter.targetPosition = 811 // 1100
-        robot!!.lifter.power = 0.45
+        robot.boom.targetPosition = 60 // 281
+        robot.boom.power = 0.99
+        robot.lifter.targetPosition = 811 // 1100
+        robot.lifter.power = 0.45
         lifterBoomState = LifterBoomStates.HIGH_CHAMBER
     }
     fun highBasket() {
-        robot!!.lifter.targetPosition = 1121 // 1520
-        robot!!.lifter.power = 0.8
-        robot!!.boom.targetPosition = 868 // 2300
-        robot!!.boom.power = .99
+        robot.lifter.targetPosition = 1121 // 1520
+        robot.lifter.power = 0.8
+        robot.boom.targetPosition = 868 // 2300
+        robot.boom.power = .99
         lifterBoomState = LifterBoomStates.HIGH_BASKET
     }
 
     fun submersible() {
         if (dpadDown.tapped()) {
             if (lifterBoomState != (LifterBoomStates.SUBMERSIBLE_MID)) {
-                robot!!.lifter.targetPosition = 490 // 490
-                robot!!.lifter.power = 0.2
-                robot!!.boom.targetPosition = 868 // 2300
-                robot!!.boom.power = .99
+                robot.lifter.targetPosition = 370 // 490
+                robot.lifter.power = 0.75
+                robot.boom.targetPosition = 868 // 2300
+                robot.boom.power = .99
                 lifterBoomState = LifterBoomStates.SUBMERSIBLE_MID
-            }
-            if (lifterBoomState == LifterBoomStates.SUBMERSIBLE_MID) {
-                robot!!.lifter.targetPosition = 219 // 297
-                robot!!.lifter.power = .75
+            } else if (lifterBoomState == LifterBoomStates.SUBMERSIBLE_MID) {
+                robot.lifter.targetPosition = 219 // 297
+                robot.lifter.power = .75
                 LifterBoomStates.SUBMERSIBLE_DOWN
             }
         }
     }
 
     fun power(): Double {
-        if (a.tapped()) slow = !slow
-        return if (slow) 0.5 else 1.0
+        if (gamepad1.right_bumper) return 0.75
+        return if (gamepad1.right_trigger > 0.0) 0.5
+        else 1.0
     }
     fun resetMotor(motor: DcMotorEx) {
         motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -136,7 +137,7 @@ abstract class InheritableTeleOp : OpMode() {
         motor.power = 0.0;
     }
     fun updateButtons() {
-        a.update(gamepad1.a)
+        a.update(gamepad2.a)
         x.update(gamepad2.x)
         dpadUp.update(gamepad2.dpad_up)
         dpadRight.update(gamepad2.dpad_right)

@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 class BaseDrive : InheritableTeleOp() {
 
     override fun start() {
-        robot!!.transversal.position = 0.55
-        robot!!.leftLock.position = 0.5
-        robot!!.rightLock.position = 0.5
+        robot.transversal.position = 0.55
+        robot.leftLock.position = 0.5
+        robot.rightLock.position = 0.5
     }
 
     override fun loop() {
@@ -22,6 +22,7 @@ class BaseDrive : InheritableTeleOp() {
         if (dpadRight.tapped()) highBasket()
 
         telemetry.addData("lifter boom state: ", lifterBoomState)
+        telemetry.addData("lifter position: ", robot!!.lifter.currentPosition)
         telemetry.update()
     }
 
