@@ -105,13 +105,13 @@ public class ClimbTest extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rf");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rb");
 
-        particleInOut = hardwareMap.get(Servo.class, "sample_input");
-        rightlock = hardwareMap.get(Servo.class, "rightlock");
-        leftlock = hardwareMap.get(Servo.class, "leftlock");
+        particleInOut = hardwareMap.get(Servo.class, "transversal");
+        rightlock = hardwareMap.get(Servo.class, "rightLock");
+        leftlock = hardwareMap.get(Servo.class, "leftLock");
         lifter = hardwareMap.get(DcMotor.class, "lifter");
         boom = hardwareMap.get(DcMotor.class, "boom");
-        lowclimb = hardwareMap.get(DcMotor.class, "low_winch");
-        highclimb = hardwareMap.get(DcMotor.class, "high_winch");
+        lowclimb = hardwareMap.get(DcMotor.class, "stage1");
+        highclimb = hardwareMap.get(DcMotor.class, "stage2");
 
         //Lock flags
         boolean dpadUpLock = false;
@@ -191,6 +191,8 @@ public class ClimbTest extends LinearOpMode {
         telemetry.update();
 
         int diff = 0;
+        highclimb.setTargetPosition(725);
+        highclimb.setPower(1.0);
 
         waitForStart();
 
@@ -204,9 +206,9 @@ public class ClimbTest extends LinearOpMode {
             if (gamepad2.dpad_up && !dpadUpLock) {//Ok, now go to safe mode
                 dpadUpLock = true;
                 log.info("Safe Mode: boom position = " + boom.getCurrentPosition());
-                lifter.setTargetPosition(-800);
+                lifter.setTargetPosition((int)(-800 *.738));
                 lifter.setPower(1.0);
-                boom.setTargetPosition(100);
+                boom.setTargetPosition(10);
                 boom.setPower(.99);
             } else if (!gamepad2.dpad_up && dpadUpLock && !lifter.isBusy() && !boom.isBusy()) {
                 dpadUpLock = false;
