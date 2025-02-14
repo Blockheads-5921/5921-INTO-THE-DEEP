@@ -6,7 +6,7 @@ import com.acmerobotics.dashboard.config.Config
 object Constants {
     @Config
     object Lifter {
-        const val SAFE_MODE = 442
+        const val SAFE_MODE = 420
         const val HIGH_CHAMBER = 780
         const val HIGH_BASKET = 1121
         const val SUBMERSIBLE_MID = 370

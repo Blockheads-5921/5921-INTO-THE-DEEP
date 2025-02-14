@@ -14,7 +14,6 @@ class RedObservation() : InheritableAutonomous() {
 
     val pi = Math.PI;
 
-
     override fun runOpMode() {
         robot = MecanumDrive(hardwareMap, initialPose)
         val claw = Claw(hardwareMap)
