@@ -89,9 +89,8 @@ public class Red_F4 extends LinearOpMode {
 
         final double GRAB = 0.55;
         final double RELEASE =0.3;
+
         final double waitTime = 1.0;
-
-
 
         //Move to high bar that will clip the specimen onto it and move back
         Action highBar = drive.actionBuilder(new Pose2d(8.5, -64.5, Math.toRadians(90)))
