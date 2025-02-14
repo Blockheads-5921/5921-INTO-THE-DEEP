@@ -12,7 +12,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class Test {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
-        RoadRunnerBotEntity robot = new DefaultBotBuilder(meepMeep).setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15).build();;
+        RoadRunnerBotEntity robot = new DefaultBotBuilder(meepMeep).setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15).build();
 
         Pose2d initialPose = new Pose2d(8.5, -64.5, Math.toRadians(90.0));
 

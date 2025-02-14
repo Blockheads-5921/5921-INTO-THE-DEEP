@@ -100,10 +100,10 @@ public class ClimbTest extends LinearOpMode {
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
 
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "lf");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "lb");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "rf");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "rb");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFront");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "leftBack");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
         particleInOut = hardwareMap.get(Servo.class, "transversal");
         rightlock = hardwareMap.get(Servo.class, "rightLock");
@@ -191,7 +191,7 @@ public class ClimbTest extends LinearOpMode {
         telemetry.update();
 
         int diff = 0;
-        highclimb.setTargetPosition(725);
+        highclimb.setTargetPosition(1800);
         highclimb.setPower(1.0);
 
         waitForStart();
@@ -206,7 +206,7 @@ public class ClimbTest extends LinearOpMode {
             if (gamepad2.dpad_up && !dpadUpLock) {//Ok, now go to safe mode
                 dpadUpLock = true;
                 log.info("Safe Mode: boom position = " + boom.getCurrentPosition());
-                lifter.setTargetPosition((int)(-800 *.738));
+                lifter.setTargetPosition(-800);
                 lifter.setPower(1.0);
                 boom.setTargetPosition(10);
                 boom.setPower(.99);
