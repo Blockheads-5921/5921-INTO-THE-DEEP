@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
+import com.qualcomm.robotcore.util.ElapsedTime
 
 abstract class InheritableAutonomous : LinearOpMode() {
     abstract val initialPose: Pose2d
@@ -44,16 +45,18 @@ class LifterBoom(hardwareMap: HardwareMap) {
         }
     }
 
-    fun setLifterBoom(lifterPos: Int, boomPos: Int): Action {
+    fun setLifterBoom(lifterPos: Int, boomPos: Int, timeout : Int): Action {
+        val time = ElapsedTime()
+
         return Action {
             lifter.targetPosition = lifterPos
             lifter.mode = DcMotor.RunMode.RUN_TO_POSITION
-            lifter.power = .45
+            lifter.power = .6
             boom.targetPosition = boomPos
             boom.mode = DcMotor.RunMode.RUN_TO_POSITION
             boom.power = .45
 
-            !(lifter.currentPosition == lifterPos && boom.currentPosition == boomPos)
+            !(lifter.currentPosition == lifterPos && boom.currentPosition == boomPos) && time.milliseconds() < timeout
         }
     }
 }

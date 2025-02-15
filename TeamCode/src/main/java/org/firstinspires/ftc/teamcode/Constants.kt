@@ -7,7 +7,7 @@ object Constants {
     @Config
     object Lifter {
         const val SAFE_MODE = 420
-        const val HIGH_CHAMBER = 780
+        const val HIGH_CHAMBER = 760
         const val HIGH_BASKET = 1121
         const val SUBMERSIBLE_MID = 370
         const val SUBMERSIBLE_DOWN = 219

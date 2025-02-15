@@ -21,18 +21,14 @@ class RedObservation() : InheritableAutonomous() {
 
         val components = object {
             val preClipSpecimenOne = robot.actionBuilder(initialPose)
-                .lineToY(-36.0, TranslationalVelConstraint(11.0))
+                .lineToY(-33.0, TranslationalVelConstraint(40.0))
+                .build()
+
+            val pushSpikeSpecimen = robot.actionBuilder(Pose2d(8.5, -36.0, Math.toRadians(90.0)))
+                .lineToY(-38.0, TranslationalVelConstraint(60.0))
+                .splineToConstantHeading(Vector2d(39.0, -48.0), Math.toRadians(90.0))
                 .build()
         }
-
-        val pushSpikeSpecimen = robot.actionBuilder(Pose2d(8.5, -36.0, Math.toRadians(90.0)))
-            .lineToY(-38.0, TranslationalVelConstraint(60.0))
-            .splineToConstantHeading(Vector2d(39.0, -30.0), Math.toRadians(90.0))
-            .lineToY(-15.0)
-            .splineToConstantHeading(Vector2d(47.0, -15.0), Math.toRadians(-90.0))
-            .lineToY(-59.0, TranslationalVelConstraint(60.0))
-//            .splineToConstantHeading(Vector2d(47.0, -59.0), Math.toRadians(-90.0))
-            .build()
 
         waitForStart()
         runBlocking(
@@ -41,10 +37,14 @@ class RedObservation() : InheritableAutonomous() {
                 ParallelAction(
                     components.preClipSpecimenOne,
                     lifterBoom.setLifterBoom(
-                        Constants.Lifter.HIGH_CHAMBER,
-                        Constants.Boom.HIGH_CHAMBER
+                        Constants.Lifter.HIGH_CHAMBER - 20,
+                        Constants.Boom.HIGH_CHAMBER,
+                        2500
                     )
-                )
+                ),
+                claw.open(),
+                components.pushSpikeSpecimen,
+                lifterBoom.setLifterBoom(0, 0, 1000)
             )
         )
     }
