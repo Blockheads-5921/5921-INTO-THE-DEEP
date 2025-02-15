@@ -100,10 +100,12 @@ public class ClimbTest extends LinearOpMode {
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
 
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "lf");
+     /*   leftFrontDrive = hardwareMap.get(DcMotor.class, "lf");
         leftBackDrive = hardwareMap.get(DcMotor.class, "lb");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rf");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rb");
+
+      */
 
         particleInOut = hardwareMap.get(Servo.class, "transversal");
         rightlock = hardwareMap.get(Servo.class, "rightLock");
@@ -144,11 +146,11 @@ public class ClimbTest extends LinearOpMode {
         // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
         // Reverse the direction (flip FORWARD <-> REVERSE ) of awheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+      /*  leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
-
+*/
         lifter.setDirection(DcMotor.Direction.REVERSE);
         boom.setDirection(DcMotor.Direction.REVERSE);
         lowclimb.setDirection(DcMotor.Direction.FORWARD);
@@ -191,7 +193,7 @@ public class ClimbTest extends LinearOpMode {
         telemetry.update();
 
         int diff = 0;
-        highclimb.setTargetPosition(725);
+        highclimb.setTargetPosition(1300);
         highclimb.setPower(1.0);
 
         waitForStart();
@@ -206,7 +208,7 @@ public class ClimbTest extends LinearOpMode {
             if (gamepad2.dpad_up && !dpadUpLock) {//Ok, now go to safe mode
                 dpadUpLock = true;
                 log.info("Safe Mode: boom position = " + boom.getCurrentPosition());
-                lifter.setTargetPosition((int)(-800 *.738));
+                lifter.setTargetPosition((int)(-2000));
                 lifter.setPower(1.0);
                 boom.setTargetPosition(10);
                 boom.setPower(.99);
