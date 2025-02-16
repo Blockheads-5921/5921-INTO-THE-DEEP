@@ -22,7 +22,8 @@ class BaseDrive : InheritableTeleOp() {
         if (dpadRight.tapped()) highBasket()
 
         telemetry.addData("lifter boom state: ", lifterBoomState)
-        telemetry.addData("lifter position: ", robot!!.lifter.currentPosition)
+        telemetry.addData("lifter position: ", robot.lifter.currentPosition)
+        telemetry.addData("boom position: ", robot.boom.currentPosition)
         telemetry.update()
     }
 

@@ -45,10 +45,10 @@ class LifterBoom(hardwareMap: HardwareMap) {
         }
     }
 
-    fun setLifterBoom(lifterPos: Int, boomPos: Int, timeout : Int): Action {
-        val time = ElapsedTime()
+    fun setLifterBoom(lifterPos: Int, boomPos: Int): Action {
 
-        return Action {
+
+        return Action() {
             lifter.targetPosition = lifterPos
             lifter.mode = DcMotor.RunMode.RUN_TO_POSITION
             lifter.power = .6
@@ -56,7 +56,7 @@ class LifterBoom(hardwareMap: HardwareMap) {
             boom.mode = DcMotor.RunMode.RUN_TO_POSITION
             boom.power = .45
 
-            !(lifter.currentPosition == lifterPos && boom.currentPosition == boomPos) && time.milliseconds() < timeout
+            (lifter.isBusy || boom.isBusy)
         }
     }
 }
