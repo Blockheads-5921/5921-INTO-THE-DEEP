@@ -25,22 +25,10 @@ public class MeepMeep_redf3Testing {
                 .waitSeconds(1)
 
                 //Get right strike
-                .splineToSplineHeading(new Pose2d(-20, -39, Math.toRadians(160)), Math.toRadians(123))
-                .waitSeconds(1)
-
-                //Go to basket
-                .splineTo(new Vector2d(-53, -53), Math.toRadians(-133))
-                .waitSeconds(1)
-
-                //Backup
-                .setReversed(true)
-                .splineTo(new Vector2d(-43, -43), Math.toRadians(53))
-
-                //Drop boom and park
-                .setReversed(false)
-                        .splineTo(new Vector2d(-53, -53), Math.toRadians(-133))
-                        .waitSeconds(1)
-                
+                        .strafeTo(new Vector2d(35, -50))
+                        .turn(Math.toRadians(-180))
+                        .waitSeconds(2)
+                        .lineToY(-40)
                 .build());
 
 

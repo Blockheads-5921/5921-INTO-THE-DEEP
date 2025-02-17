@@ -34,8 +34,8 @@ class RedObservation() : InheritableAutonomous() {
 
             val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(90.0)))
                // .turnTo(-90.0)
-               // .turnTo(Math.toRadians(0.0))
-                .turn(Math.toRadians(90.0))
+                .turnTo(Math.toRadians(-90.0))
+
                 .build()
 
             val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
@@ -60,7 +60,7 @@ class RedObservation() : InheritableAutonomous() {
                 claw.close(),
                 components.wait
             ),
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 30, 30),
+            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 30),
             components.back
         )
 

@@ -11,14 +11,15 @@ object Constants {
         const val HIGH_BASKET = 1121
         const val SUBMERSIBLE_MID = 370
         const val SUBMERSIBLE_DOWN = 219
-        const val PICKUP_SPIKE = 170
+        const val PICKUP_SPIKE = 270
     }
 
     @Config
     object Boom {
         const val SAFE_MODE = 38
         const val HIGH_CHAMBER = 106
-        const val HIGH_BASKET = 868
+        const val HIGH_BASKET = 948 //
+        // 868
         const val SUBMERSIBLE = 868
         const val PICKUP_SPIKE = 300
     }
