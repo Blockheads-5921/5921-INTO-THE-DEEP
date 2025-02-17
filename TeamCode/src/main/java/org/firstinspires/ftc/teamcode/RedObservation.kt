@@ -63,7 +63,7 @@ class RedObservation() : InheritableAutonomous() {
             lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 30),
             components.back
             //lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE+50, Constants.Boom.PICKUP_SPIKE)
-
+        )
 
         val second: Action = SequentialAction(
             claw.open(),
