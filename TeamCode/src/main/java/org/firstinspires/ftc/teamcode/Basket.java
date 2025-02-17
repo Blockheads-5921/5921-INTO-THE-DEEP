@@ -52,9 +52,9 @@ public class Basket extends LinearOpMode {
 
     public void setLifterBoom(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
         lifter.setTargetPosition(lifterVal);
-        lifter.setPower(.45);
+        lifter.setPower(1);
         boom.setTargetPosition(boomVal);
-        boom.setPower(.45);
+        boom.setPower(1);
     }
 
     public void setLifterBoomAndWait(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
@@ -128,7 +128,7 @@ public class Basket extends LinearOpMode {
         //Clip preloaded specimen
         clamp.setPosition(GRAB);
         //Actions.runBlocking(delay1);
-        setLifterBoom(boom, lifter, 281, 1025);
+        setLifterBoom(boom, lifter, (int)(281*0.377), (int)(1025*0.738));
         //while (boom.isBusy() || lifter.isBusy()){ }
         Actions.runBlocking(highBar);
         clamp.setPosition(RELEASE);
@@ -136,13 +136,13 @@ public class Basket extends LinearOpMode {
         //Drop back then extend boom
          Actions.runBlocking(getRightStrike);
          //Thread.sleep(1000);
-         setLifterBoom(boom, lifter,2350, 297);
+         setLifterBoom(boom, lifter,(int)(2350*0.377), (int)(297*0.738));
          while (boom.isBusy() || lifter.isBusy()){};
          clamp.setPosition(GRAB);
          Thread.sleep(1000);
 
          //Go to Basket
-        setLifterBoom(boom, lifter, 2300, 1520);
+        setLifterBoom(boom, lifter, (int)(2300*0.377), (int)(1520*0.738));
         while (boom.isBusy() || lifter.isBusy()){}
         Thread.sleep(500);
         Actions.runBlocking(goToBasket);
@@ -151,14 +151,10 @@ public class Basket extends LinearOpMode {
 
         //Backup and drop boom
         Actions.runBlocking(backup);
-        setLifterBoom(boom, lifter, 100, 565);
+        setLifterBoom(boom, lifter, (int)(100*.377), (int)(565*0.738));
         while (boom.isBusy() || lifter.isBusy()){};
 
         //Park
         Actions.runBlocking(park);
-
-
-
-
     }
 }

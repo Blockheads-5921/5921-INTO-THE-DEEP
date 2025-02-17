@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.Vector2d
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.teamcode.TankDrive.TurnAction
+import org.opencv.core.Mat
 
 @Autonomous(name = "Red Observation", group = "Autonomous")
 class RedObservation() : InheritableAutonomous() {
@@ -23,7 +24,7 @@ class RedObservation() : InheritableAutonomous() {
 
         val components = object {
             val preClipSpecimenOne = robot.actionBuilder(initialPose)
-                .lineToY(-33.0, TranslationalVelConstraint(40.0))
+                .lineToY(-33.0, TranslationalVelConstraint(50.0))
                 .build()
 
             val strafeToSpikes = robot.actionBuilder(Pose2d(8.5, -33.0, Math.toRadians(90.0)))
@@ -31,8 +32,10 @@ class RedObservation() : InheritableAutonomous() {
                 .strafeTo(Vector2d(48.0, -44.0))
                 .build()
 
-            val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(-180.0)))
-                .turnTo(90.0)
+            val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(90.0)))
+               // .turnTo(-90.0)
+               // .turnTo(Math.toRadians(0.0))
+                .turn(Math.toRadians(90.0))
                 .build()
 
             val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
@@ -57,7 +60,7 @@ class RedObservation() : InheritableAutonomous() {
                 claw.close(),
                 components.wait
             ),
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 30, 0),
+            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 30, 30),
             components.back
         )
 
@@ -69,7 +72,7 @@ class RedObservation() : InheritableAutonomous() {
 
         waitForStart()
         runBlocking(
-            second
+            first
         )
     }
 }

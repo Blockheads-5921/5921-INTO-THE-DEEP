@@ -36,12 +36,12 @@ class LifterBoom(hardwareMap: HardwareMap) {
         return Action {
             lifter.targetPosition = Constants.Lifter.SAFE_MODE
             lifter.mode = DcMotor.RunMode.RUN_TO_POSITION
-            lifter.power = 0.5
+            lifter.power = 1.0
             boom.targetPosition = Constants.Boom.HIGH_BASKET
             boom.mode = DcMotor.RunMode.RUN_TO_POSITION
             boom.power = 0.99
 
-            !(lifter.currentPosition == 600 && boom.currentPosition == 100)
+            (lifter.isBusy || boom.isBusy)
         }
     }
 
@@ -51,10 +51,10 @@ class LifterBoom(hardwareMap: HardwareMap) {
         return Action() {
             lifter.targetPosition = lifterPos
             lifter.mode = DcMotor.RunMode.RUN_TO_POSITION
-            lifter.power = .6
+            lifter.power = 1.0
             boom.targetPosition = boomPos
             boom.mode = DcMotor.RunMode.RUN_TO_POSITION
-            boom.power = .45
+            boom.power = 1.0
 
             (lifter.isBusy || boom.isBusy)
         }
