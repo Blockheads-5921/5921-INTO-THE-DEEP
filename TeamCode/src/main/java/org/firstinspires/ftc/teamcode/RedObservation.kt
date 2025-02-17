@@ -34,7 +34,7 @@ class RedObservation() : InheritableAutonomous() {
 
             val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(90.0)))
                // .turnTo(-90.0)
-                .turnTo(Math.toRadians(-90.0))
+                .turn(Math.toRadians(-188.0))
 
                 .build()
 
@@ -62,7 +62,8 @@ class RedObservation() : InheritableAutonomous() {
             ),
             lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 30),
             components.back
-        )
+            //lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE+50, Constants.Boom.PICKUP_SPIKE)
+
 
         val second: Action = SequentialAction(
             claw.open(),
