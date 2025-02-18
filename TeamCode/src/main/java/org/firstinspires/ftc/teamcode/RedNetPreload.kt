@@ -23,7 +23,10 @@ class RedNetPreload() : InheritableAutonomous() {
             val depositPreload = robot.actionBuilder(initialPose)
                 .strafeToLinearHeading(Vector2d(-48.0, -48.0), -45.0).build()
 
-            val innerSpike = robot.actionBuilder(Pose2d(-48.0, -48.0, Math.toRadians(-45.0))).build()
+            val innerSpike = robot.actionBuilder(Pose2d(-48.0, -48.0, Math.toRadians(-45.0)))
+                .strafeToLinearHeading(
+                    Vector2d(-60.0, -48.0), 90.0
+                )
 
             val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
         }
