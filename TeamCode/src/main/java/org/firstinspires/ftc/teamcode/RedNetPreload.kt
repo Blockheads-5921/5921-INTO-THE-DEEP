@@ -9,10 +9,8 @@ import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
 @Autonomous(name = "Red Net Preload", group = "Autonomous")
-class RedNetPreload() : InheritableAutonomous() {
+class RedNetPreload : InheritableAutonomous() {
     override var initialPose: Pose2d = Pose2d(-8.5, -64.5, Math.toRadians(90.0))
-
-    val pi = Math.PI;
 
     override fun runOpMode() {
         robot = MecanumDrive(hardwareMap, initialPose)
@@ -27,10 +25,6 @@ class RedNetPreload() : InheritableAutonomous() {
                 .strafeToLinearHeading(
                     Vector2d(-60.0, -48.0), 105.0
                 ).build()
-
-
-
-            val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
         }
 
         val first: Action = SequentialAction(
