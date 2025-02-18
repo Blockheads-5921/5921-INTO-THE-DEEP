@@ -21,10 +21,21 @@ class RedNetPreload : InheritableAutonomous() {
             val depositPreload = robot.actionBuilder(initialPose)
                 .strafeToLinearHeading(Vector2d(-48.0, -48.0), -45.0).build()
 
-            val innerSpike = robot.actionBuilder(Pose2d(-48.0, -48.0, Math.toRadians(-45.0)))
+            val wallSpike = robot.actionBuilder(Pose2d(-48.0, -48.0, Math.toRadians(-45.0)))
                 .strafeToLinearHeading(
                     Vector2d(-60.0, -48.0), 105.0
                 ).build()
+
+            val depositWallSpike = robot.actionBuilder(Pose2d(-60.0, -48.0, Math.toRadians(105.0)))
+                .strafeToLinearHeading(Vector2d(-48.0, -48.0), -45.0).build()
+
+            val middleSpike = robot.actionBuilder(Pose2d(-48.0, -48.0, Math.toRadians(-45.0)))
+                .strafeToLinearHeading(
+                    Vector2d(-60.0, -48.0), 90.0
+                ).build()
+
+            val depositMiddleSpike = robot.actionBuilder(Pose2d(-60.0, -48.0, Math.toRadians(90.0)))
+                .strafeToLinearHeading(Vector2d(-48.0, -48.0), -45.0).build()
         }
 
         val first: Action = SequentialAction(
@@ -35,8 +46,24 @@ class RedNetPreload : InheritableAutonomous() {
             ),
             claw.open(),
             ParallelAction(
-                lifterBoom.safeMode(),
-                components.innerSpike
+                lifterBoom.safeMode(), // replace with grabbing position
+                components.wallSpike
+            ),
+            claw.close(),
+            ParallelAction(
+                components.depositWallSpike,
+                lifterBoom.setLifterBoom(Constants.Lifter.HIGH_BASKET, Constants.Boom.HIGH_BASKET)
+            ),
+            claw.open(),
+            ParallelAction(
+                lifterBoom.safeMode(), // replace with grabbing position
+                components.middleSpike
+            ),
+            claw.close(),
+            ParallelAction(
+                components.depositMiddleSpike,
+                lifterBoom.setLifterBoom(Constants.Lifter.HIGH_BASKET, Constants.Boom.HIGH_BASKET)
+
             )
         )
 
