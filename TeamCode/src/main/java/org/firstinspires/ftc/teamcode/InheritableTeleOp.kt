@@ -12,7 +12,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import kotlin.math.abs
 import kotlin.math.pow
 
-abstract class InheritableTeleOp : OpMode() {
+abstract class
+
+
+InheritableTeleOp : OpMode() {
     protected lateinit var robot: MecanumDrive
     private lateinit var dashboard: FtcDashboard
     private var dashboardTelemetry: Telemetry? = null
@@ -29,6 +32,9 @@ abstract class InheritableTeleOp : OpMode() {
     private var dpadDown = Button()
     private var leftBumper = Button()
     private var rightBumper = Button()
+    protected var preClimb = Button()
+    protected var lockClimb = Button()
+    protected var climb = Button()
 
     override fun init() {
         robot = MecanumDrive(hardwareMap, Pose2d(0.0, 0.0, 0.0))
@@ -97,7 +103,7 @@ abstract class InheritableTeleOp : OpMode() {
     fun highChamber() {
         robot.boom.targetPosition = Constants.Boom.HIGH_CHAMBER // 281
         robot.boom.power = 0.99
-        robot.lifter.targetPosition = Constants.Lifter.HIGH_CHAMBER // 1100
+        robot.lifter.targetPosition = Constants.Lifter.HIGH_CHAMBER + 100// 1100
         robot.lifter.power = 0.45
         lifterBoomState = LifterBoomStates.HIGH_CHAMBER
     }
@@ -124,6 +130,25 @@ abstract class InheritableTeleOp : OpMode() {
             }
         }
     }
+    fun lifterToClimbPosition() {
+        if (preClimb.tapped()) {
+            robot.lifter.targetPosition = Constants.Lifter.CLIMB_POSITION
+            robot.lifter.power = 1.0
+            robot.boom.targetPosition = Constants.Boom.SAFE_MODE
+            robot.boom.power = 1.0
+        }
+    }
+    fun lockLifter(){
+        robot.stageTwo.targetPosition = Constants.StageTwo.LOCK
+        robot.stageTwo.power = 1.0
+    }
+    fun robotClimb(){
+        robot.lifter.targetPosition = Constants.Lifter.SAFE_MODE
+        robot.lifter.power = 1.0
+        robot.boom.targetPosition =Constants.Boom.SAFE_MODE
+        robot.boom.power - 1.0
+        robot.stageTwo.power =0.0
+    }
 
     fun power(): Double {
         if (gamepad1.right_bumper) return 0.75
@@ -145,6 +170,9 @@ abstract class InheritableTeleOp : OpMode() {
         dpadDown.update(gamepad2.dpad_down)
         leftBumper.update(gamepad2.left_bumper)
         rightBumper.update(gamepad2.right_bumper)
+        preClimb.update(gamepad1.dpad_up)
+        lockClimb.update(gamepad1.dpad_left)
+        climb.update(gamepad1.dpad_down)
     }
 
     enum class ClawStates {

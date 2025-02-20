@@ -49,7 +49,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @Autonomous(name = "Red_f4", group = "Autonomous")
-@Disabled
 public class Red_F4 extends LinearOpMode {
 
     public void setLifterBoom(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
@@ -70,7 +69,7 @@ public class Red_F4 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(8.5, -67.5, Math.toRadians(90)));
-        Servo clamp = hardwareMap.get(Servo.class, "sample_input");
+        Servo clamp = hardwareMap.get(Servo.class, "transversal");
         DcMotor boom = hardwareMap.get(DcMotor.class, "boom");
         DcMotor lifter = hardwareMap.get(DcMotor.class, "lifter");
 
@@ -103,7 +102,8 @@ public class Red_F4 extends LinearOpMode {
         Action pushStrike1and2 = drive.actionBuilder(new Pose2d(8.5, -36, Math.toRadians(90)))
                 .lineToY(-38, new TranslationalVelConstraint(60))
                 //Push first sample into zone
-                .splineToConstantHeading(new Vector2d(39, -30), Math.toRadians(90))
+                //.splineToConstantHeading(new Vector2d(39, -30), Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(39,-39), Math.toRadians(-90))
                 .lineToY(-15)
                 .splineToConstantHeading(new Vector2d(47,-15), Math.toRadians(-90))
                 .lineToY(-59, new TranslationalVelConstraint(60))
@@ -203,7 +203,7 @@ public class Red_F4 extends LinearOpMode {
         //Clip preloaded specimen
         clamp.setPosition(GRAB);
         //Actions.runBlocking(delay1);
-        setLifterBoom(boom, lifter, 281, 1025);
+        setLifterBoom(boom, lifter, 106, 755);
         //while (boom.isBusy() || lifter.isBusy()){ }
         Actions.runBlocking(highBar);
         clamp.setPosition(RELEASE);

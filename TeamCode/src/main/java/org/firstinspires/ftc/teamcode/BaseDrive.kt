@@ -16,6 +16,9 @@ class BaseDrive : InheritableTeleOp() {
         drive(power())
         claw()
         submersible()
+        if (preClimb.tapped()) lifterToClimbPosition()
+        if (lockClimb.tapped()) lockLifter()
+        if (climb.tapped()) robotClimb()
 
         if (x.tapped()) highChamber()
         if (dpadUp.tapped()) safeMode()

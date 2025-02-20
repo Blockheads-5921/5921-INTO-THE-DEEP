@@ -210,8 +210,12 @@ public class ClimbTest extends LinearOpMode {
                 log.info("Safe Mode: boom position = " + boom.getCurrentPosition());
                 lifter.setTargetPosition((int)(-2000));
                 lifter.setPower(1.0);
+                lowclimb.setTargetPosition(2850);//1425 tics / revolution
+                lowclimb.setPower(1.0);
                 boom.setTargetPosition(10);
                 boom.setPower(.99);
+           //     highclimb.setTargetPosition(0);
+                highclimb.setPower(0.0);
             } else if (!gamepad2.dpad_up && dpadUpLock && !lifter.isBusy() && !boom.isBusy()) {
                 dpadUpLock = false;
             }

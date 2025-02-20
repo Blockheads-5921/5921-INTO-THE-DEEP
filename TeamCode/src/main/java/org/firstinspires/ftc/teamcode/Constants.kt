@@ -7,21 +7,21 @@ object Constants {
     @Config
     object Lifter {
         const val SAFE_MODE = 435
-        const val HIGH_CHAMBER = 775
+        const val HIGH_CHAMBER = 755
         const val HIGH_BASKET = 1121
         const val SUBMERSIBLE_MID = 370
         const val SUBMERSIBLE_DOWN = 219
-        const val PICKUP_SPIKE = 270
+        const val PICKUP_SPIKE = 200
+        const val CLIMB_POSITION = 1298
     }
 
     @Config
     object Boom {
         const val SAFE_MODE = 38
         const val HIGH_CHAMBER = 106
-        const val HIGH_BASKET = 948 //
-        // 868
+        const val HIGH_BASKET = 948 // 868
         const val SUBMERSIBLE = 868
-        const val PICKUP_SPIKE = 300
+        const val PICKUP_SPIKE = 280
     }
 
     @Config
@@ -29,4 +29,8 @@ object Constants {
         const val OPEN = 0.3
         const val CLOSED = 0.55
    }
+    @Config
+    object StageTwo {
+        const val LOCK = 1300
+    }
 }

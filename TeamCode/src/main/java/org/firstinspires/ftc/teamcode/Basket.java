@@ -54,7 +54,7 @@ public class Basket extends LinearOpMode {
         lifter.setTargetPosition(lifterVal);
         lifter.setPower(1);
         boom.setTargetPosition(boomVal);
-        boom.setPower(1);
+        boom.setPower(15921);
     }
 
     public void setLifterBoomAndWait(DcMotor boom, DcMotor lifter, int boomVal, int lifterVal) {
