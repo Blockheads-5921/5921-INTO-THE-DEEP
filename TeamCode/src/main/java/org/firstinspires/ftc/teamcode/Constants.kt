@@ -12,7 +12,7 @@ object Constants {
         const val SUBMERSIBLE_MID = 370
         const val SUBMERSIBLE_DOWN = 219
         const val PICKUP_SPIKE = 200
-        const val CLIMB_POSITION = 1298
+        const val CLIMB_POSITION = 1500
     }
 
     @Config

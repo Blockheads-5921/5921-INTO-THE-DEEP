@@ -96,18 +96,14 @@ public class Red_F4 extends LinearOpMode {
                 .lineToY(-36, new TranslationalVelConstraint(11))
                 .build();
 
-
-
         //Push strikes 1 and 2
         Action pushStrike1and2 = drive.actionBuilder(new Pose2d(8.5, -36, Math.toRadians(90)))
-                .lineToY(-38, new TranslationalVelConstraint(60))
-                //Push first sample into zone
-                //.splineToConstantHeading(new Vector2d(39, -30), Math.toRadians(90))
-                .strafeToLinearHeading(new Vector2d(39,-39), Math.toRadians(-90))
+                .lineToY(-44, new TranslationalVelConstraint(60))
+                .splineToLinearHeading(new Pose2d(39, -39, Math.toRadians(-90)), Math.toRadians(-90))
                 .lineToY(-15)
-                .splineToConstantHeading(new Vector2d(47,-15), Math.toRadians(-90))
-                .lineToY(-59, new TranslationalVelConstraint(60))
-                .splineToConstantHeading(new Vector2d(47,-59), Math.toRadians(90))
+//                .splineToConstantHeading(new Vector2d(47,-15), Math.toRadians(-90))
+//                .lineToY(-59, new TranslationalVelConstraint(60))
+//                .splineToConstantHeading(new Vector2d(47,-59), Math.toRadians(90))
                 //.lineToY(-46)
                 // Go back and push the middle strike
                 //.lineToY(-15)  //************************************************
@@ -210,6 +206,8 @@ public class Red_F4 extends LinearOpMode {
 
         //Go push strike 1 and 2 and grab strike 1
         Actions.runBlocking(pushStrike1and2);
+        setLifterBoom(boom, lifter, 0, 0);
+
         //Actions.runBlocking(Grab_clip);
         //setLifterBoom(boom, lifter, 100, 560);//get ready clamp strike 1
         //while (boom.isBusy() || lifter.isBusy()){}
@@ -233,7 +231,7 @@ public class Red_F4 extends LinearOpMode {
 
 
         //Go park
-        Actions.runBlocking(park);  //************************************************************
+//        Actions.runBlocking(park);  //************************************************************
 
 /*        //Go push strike 3
         Actions.runBlocking(pushStrike3);

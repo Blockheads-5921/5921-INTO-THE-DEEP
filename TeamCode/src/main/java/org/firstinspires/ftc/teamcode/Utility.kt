@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode
 
-import android.annotation.SuppressLint
 import java.lang.reflect.Field
 
 
@@ -74,7 +73,7 @@ class Button {
         return this.state == state
     }
 
-    fun tapped(): Boolean {
-        return this.state == States.TAP
+    fun up(): Boolean {
+        return this.state == States.UP
     }
 }

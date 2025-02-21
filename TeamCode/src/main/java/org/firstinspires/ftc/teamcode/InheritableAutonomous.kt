@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
@@ -9,10 +10,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.robotcore.external.Telemetry
 
 abstract class InheritableAutonomous : LinearOpMode() {
     abstract val initialPose: Pose2d
     lateinit var robot: MecanumDrive
+    lateinit var dashboard: FtcDashboard
+    lateinit var dashboardTelemetry: Telemetry
 
     override fun runOpMode() {
 

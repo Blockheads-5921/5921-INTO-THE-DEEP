@@ -7,15 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.robotcore.external.Const
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import kotlin.math.abs
 import kotlin.math.pow
 
-abstract class
-
-
-InheritableTeleOp : OpMode() {
+abstract class InheritableTeleOp : OpMode() {
     protected lateinit var robot: MecanumDrive
     private lateinit var dashboard: FtcDashboard
     private var dashboardTelemetry: Telemetry? = null
@@ -82,7 +78,7 @@ InheritableTeleOp : OpMode() {
     }
 
     fun claw() {
-        if (a.tapped()) {
+        if (a.up()) {
             if (clawState == ClawStates.CLOSED) {
                 robot.transversal.position = Constants.Claw.OPEN
                 clawState = ClawStates.OPEN
@@ -100,6 +96,7 @@ InheritableTeleOp : OpMode() {
         robot.boom.power = 0.99
         lifterBoomState = LifterBoomStates.SAFE_MODE
     }
+
     fun highChamber() {
         robot.boom.targetPosition = Constants.Boom.HIGH_CHAMBER // 281
         robot.boom.power = 0.99
@@ -107,6 +104,7 @@ InheritableTeleOp : OpMode() {
         robot.lifter.power = 0.45
         lifterBoomState = LifterBoomStates.HIGH_CHAMBER
     }
+
     fun highBasket() {
         robot.lifter.targetPosition = Constants.Lifter.HIGH_BASKET // 1520
         robot.lifter.power = 0.8
@@ -116,7 +114,7 @@ InheritableTeleOp : OpMode() {
     }
 
     fun submersible() {
-        if (dpadDown.tapped()) {
+        if (dpadDown.up()) {
             if (lifterBoomState != (LifterBoomStates.SUBMERSIBLE_MID)) {
                 robot.lifter.targetPosition = Constants.Lifter.SUBMERSIBLE_MID // 490
                 robot.lifter.power = 0.75
@@ -130,24 +128,25 @@ InheritableTeleOp : OpMode() {
             }
         }
     }
+
     fun lifterToClimbPosition() {
-        if (preClimb.tapped()) {
-            robot.lifter.targetPosition = Constants.Lifter.CLIMB_POSITION
-            robot.lifter.power = 1.0
-            robot.boom.targetPosition = Constants.Boom.SAFE_MODE
-            robot.boom.power = 1.0
-        }
+        robot.lifter.targetPosition = Constants.Lifter.CLIMB_POSITION
+        robot.lifter.power = 1.0
+        robot.boom.targetPosition = Constants.Boom.SAFE_MODE
+        robot.boom.power = 1.0
     }
-    fun lockLifter(){
+
+    fun lockLifter() {
         robot.stageTwo.targetPosition = Constants.StageTwo.LOCK
         robot.stageTwo.power = 1.0
     }
-    fun robotClimb(){
-        robot.lifter.targetPosition = Constants.Lifter.SAFE_MODE
+
+    fun robotClimb() {
+        robot.lifter.targetPosition = 5
         robot.lifter.power = 1.0
-        robot.boom.targetPosition =Constants.Boom.SAFE_MODE
+        robot.boom.targetPosition = Constants.Boom.SAFE_MODE
         robot.boom.power - 1.0
-        robot.stageTwo.power =0.0
+        robot.stageTwo.power = 0.0
     }
 
     fun power(): Double {
@@ -155,6 +154,7 @@ InheritableTeleOp : OpMode() {
         return if (gamepad1.right_trigger > 0.0) 0.5
         else 1.0
     }
+
     fun resetMotor(motor: DcMotorEx) {
         motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -162,6 +162,7 @@ InheritableTeleOp : OpMode() {
         motor.mode = DcMotor.RunMode.RUN_TO_POSITION
         motor.power = 0.0;
     }
+
     fun updateButtons() {
         a.update(gamepad2.a)
         x.update(gamepad2.x)
@@ -179,6 +180,7 @@ InheritableTeleOp : OpMode() {
         CLOSED,
         OPEN
     }
+
     enum class LifterBoomStates {
         REST,
         SAFE_MODE,

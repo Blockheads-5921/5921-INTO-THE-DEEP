@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode
 
+import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.roadrunner.Action
 import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.Pose2d
@@ -22,6 +23,9 @@ class RedObservation() : InheritableAutonomous() {
         val claw = Claw(hardwareMap)
         val lifterBoom = LifterBoom(hardwareMap)
 
+        dashboard = FtcDashboard.getInstance()
+        dashboardTelemetry = dashboard.telemetry
+
         val components = object {
             val preClipSpecimenOne = robot.actionBuilder(initialPose)
                 .lineToY(-33.0, TranslationalVelConstraint(50.0))
@@ -33,13 +37,7 @@ class RedObservation() : InheritableAutonomous() {
                 .build()
 
             val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(90.0)))
-                .turn(Math.toRadians(-188.0))
-                .build()
-
-
-            val secondStrike = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(-188.0)))
-                .turn(Math.toRadians(188.0))
-                .strafeTo(Vector2d(58.0, -44.0))
+                .turn(Math.toRadians(-90.0))
                 .build()
 
             val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
@@ -50,26 +48,23 @@ class RedObservation() : InheritableAutonomous() {
             ParallelAction(
                 components.preClipSpecimenOne,
                 lifterBoom.setLifterBoom(
-                    Constants.Lifter.HIGH_CHAMBER,
+                    Constants.Lifter.HIGH_CHAMBER - 20,
                     Constants.Boom.HIGH_CHAMBER
                 )
             ),
             claw.open(),
             components.strafeToSpikes,
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE, Constants.Boom.PICKUP_SPIKE),
+            lifterBoom.setLifterBoom(
+                Constants.Lifter.PICKUP_SPIKE,
+                Constants.Boom.PICKUP_SPIKE
+            ),
             ParallelAction(
                 claw.close(),
                 components.wait
             ),
-
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 145),
-            components.back,
-            ParallelAction(
-                claw.open(),
-                components.wait
-            ),
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, Constants.Boom.PICKUP_SPIKE + 20),
-            components.secondStrike
+            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 30),
+            components.back
+            //lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE+50, Constants.Boom.PICKUP_SPIKE)
         )
 
         val second: Action = SequentialAction(
