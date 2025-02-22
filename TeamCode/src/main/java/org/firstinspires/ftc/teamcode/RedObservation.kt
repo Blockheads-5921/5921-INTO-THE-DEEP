@@ -28,19 +28,22 @@ class RedObservation() : InheritableAutonomous() {
 
         val components = object {
             val preClipSpecimenOne = robot.actionBuilder(initialPose)
-                .lineToY(-33.0, TranslationalVelConstraint(50.0))
+                .lineToY(-36.0, TranslationalVelConstraint(50.0))
                 .build()
 
-            val strafeToSpikes = robot.actionBuilder(Pose2d(8.5, -33.0, Math.toRadians(90.0)))
-                .lineToY(-42.0, TranslationalVelConstraint(60.0))
-                .strafeTo(Vector2d(48.0, -44.0))
+            val pushSpikes = robot.actionBuilder(Pose2d(8.5, -36.0, Math.toRadians(90.0)))
+                .lineToY(-44.0, TranslationalVelConstraint(60.0))
+                .splineToLinearHeading(Pose2d(39.0, -39.0, Math.toRadians(-90.0)), Math.toRadians(-90.0))
+                .lineToY(-15.0)
+                .splineToConstantHeading(Vector2d(47.0, -15.0), Math.toRadians(-90.0))
+                .lineToY(-62.0, TranslationalVelConstraint(60.0))
                 .build()
 
-            val back = robot.actionBuilder(Pose2d(48.0, -44.0, Math.toRadians(90.0)))
-                .turn(Math.toRadians(-90.0))
+            val grabClip = robot.actionBuilder(Pose2d(47.0, -62.0, Math.toRadians(-90.0)))
+                .lineToY(-46.0)
                 .build()
 
-            val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(0.5).build()
+            val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(1.0).build()
         }
 
         val first: Action = SequentialAction(
@@ -48,23 +51,23 @@ class RedObservation() : InheritableAutonomous() {
             ParallelAction(
                 components.preClipSpecimenOne,
                 lifterBoom.setLifterBoom(
-                    Constants.Lifter.HIGH_CHAMBER - 20,
-                    Constants.Boom.HIGH_CHAMBER
+                    749,
+                    98
                 )
             ),
             claw.open(),
-            components.strafeToSpikes,
+            components.pushSpikes,
             lifterBoom.setLifterBoom(
-                Constants.Lifter.PICKUP_SPIKE,
-                Constants.Boom.PICKUP_SPIKE
+                390,
+                38
             ),
+            components.grabClip,
+            lifterBoom.setLifterBoom(560, 100),
+            claw.close(),
             ParallelAction(
-                claw.close(),
+                lifterBoom.setLifterBoom(0,0),
                 components.wait
-            ),
-            lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE + 50, 30),
-            components.back
-            //lifterBoom.setLifterBoom(Constants.Lifter.PICKUP_SPIKE+50, Constants.Boom.PICKUP_SPIKE)
+            )
         )
 
         val second: Action = SequentialAction(
