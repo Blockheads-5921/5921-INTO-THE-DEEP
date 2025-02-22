@@ -28,12 +28,15 @@ class RedObservation() : InheritableAutonomous() {
 
         val components = object {
             val preClipSpecimenOne = robot.actionBuilder(initialPose)
-                .lineToY(-36.0, TranslationalVelConstraint(50.0))
+                .lineToY(-34.0, TranslationalVelConstraint(50.0))
                 .build()
 
-            val pushSpikes = robot.actionBuilder(Pose2d(8.5, -36.0, Math.toRadians(90.0)))
+            val pushSpikes = robot.actionBuilder(Pose2d(8.5, -34.0, Math.toRadians(90.0)))
                 .lineToY(-44.0, TranslationalVelConstraint(60.0))
-                .splineToLinearHeading(Pose2d(39.0, -39.0, Math.toRadians(-90.0)), Math.toRadians(-90.0))
+                .splineToLinearHeading(
+                    Pose2d(39.0, -39.0, Math.toRadians(-90.0)),
+                    Math.toRadians(-90.0)
+                )
                 .lineToY(-15.0)
                 .splineToConstantHeading(Vector2d(47.0, -15.0), Math.toRadians(-90.0))
                 .lineToY(-62.0, TranslationalVelConstraint(60.0))
@@ -57,15 +60,15 @@ class RedObservation() : InheritableAutonomous() {
             ),
             claw.open(),
             components.pushSpikes,
+            components.grabClip,
             lifterBoom.setLifterBoom(
                 390,
                 38
             ),
-            components.grabClip,
             lifterBoom.setLifterBoom(560, 100),
             claw.close(),
             ParallelAction(
-                lifterBoom.setLifterBoom(0,0),
+                lifterBoom.setLifterBoom(0, 0),
                 components.wait
             )
         )
