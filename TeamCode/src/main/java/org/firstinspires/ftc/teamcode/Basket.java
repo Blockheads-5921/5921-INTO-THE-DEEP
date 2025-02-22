@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Autonomous(name = "Basket", group = "Autonomous")
-@Disabled
+//@Disabled
 public class Basket extends LinearOpMode {
 
 
@@ -68,7 +68,7 @@ public class Basket extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-8.5, -67.5, Math.toRadians(90)));
-        Servo clamp = hardwareMap.get(Servo.class, "sample_input");
+        Servo clamp = hardwareMap.get(Servo.class, "transversal");
         DcMotor boom = hardwareMap.get(DcMotor.class, "boom");
         DcMotor lifter = hardwareMap.get(DcMotor.class, "lifter");
 
@@ -93,13 +93,13 @@ public class Basket extends LinearOpMode {
 
         //Move to high bar that will clip the specimen onto it and move back
         Action highBar = drive.actionBuilder(new Pose2d(-8.5, -64.5, Math.toRadians(90)))
-                .lineToY(-34, new TranslationalVelConstraint(11))
+                .lineToY(-34, new TranslationalVelConstraint(18))
                 .build();
 
         //position to grab strike
-        Action getRightStrike = drive.actionBuilder(new Pose2d(-8.5, -35, Math.toRadians(90)))
-                .lineToY(-60)
-                .splineToSplineHeading(new Pose2d(-21, -41, Math.toRadians(173)), Math.toRadians(123))
+        Action getRightStrike = drive.actionBuilder(new Pose2d(-8.5, -34, Math.toRadians(90)))
+                .lineToY(-57)
+                .splineToSplineHeading(new Pose2d(-21, -41, Math.toRadians(160)), Math.toRadians(125))
                 .build();
 
         //Go to the basket
@@ -108,7 +108,7 @@ public class Basket extends LinearOpMode {
                 .build();
 
         //Backup and drop boom
-        Action backup = drive.actionBuilder(new Pose2d(-57, -57, Math.toRadians(-103)))
+        Action backup = drive.actionBuilder(new Pose2d(-57, -57, Math.toRadians(173)))
                 .setReversed(false)
                 .splineTo(new Vector2d(-43, -43), Math.toRadians(-133))
                 .build();
@@ -128,13 +128,13 @@ public class Basket extends LinearOpMode {
         //Clip preloaded specimen
         clamp.setPosition(GRAB);
         //Actions.runBlocking(delay1);
-        setLifterBoom(boom, lifter, (int)(281*0.377), (int)(1025*0.738));
+        setLifterBoom(boom, lifter, (int)(262*0.377), (int)(1015*0.738));
         //while (boom.isBusy() || lifter.isBusy()){ }
         Actions.runBlocking(highBar);
         clamp.setPosition(RELEASE);
 
         //Drop back then extend boom
-         Actions.runBlocking(getRightStrike);
+        Actions.runBlocking(getRightStrike);
          //Thread.sleep(1000);
          setLifterBoom(boom, lifter,(int)(2350*0.377), (int)(297*0.738));
          while (boom.isBusy() || lifter.isBusy()){};
@@ -155,6 +155,6 @@ public class Basket extends LinearOpMode {
         while (boom.isBusy() || lifter.isBusy()){};
 
         //Park
-        Actions.runBlocking(park);
+       // Actions.runBlocking(park);  */
     }
 }

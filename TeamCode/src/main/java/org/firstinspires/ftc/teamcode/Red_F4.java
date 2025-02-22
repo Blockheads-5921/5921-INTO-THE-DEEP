@@ -101,8 +101,8 @@ public class Red_F4 extends LinearOpMode {
                 .lineToY(-44, new TranslationalVelConstraint(60))
                 .splineToLinearHeading(new Pose2d(39, -39, Math.toRadians(-90)), Math.toRadians(-90))
                 .lineToY(-15)
-//                .splineToConstantHeading(new Vector2d(47,-15), Math.toRadians(-90))
-//                .lineToY(-59, new TranslationalVelConstraint(60))
+                .splineToConstantHeading(new Vector2d(47,-15), Math.toRadians(-90))
+                .lineToY(-62, new TranslationalVelConstraint(60))
 //                .splineToConstantHeading(new Vector2d(47,-59), Math.toRadians(90))
                 //.lineToY(-46)
                 // Go back and push the middle strike
@@ -112,7 +112,7 @@ public class Red_F4 extends LinearOpMode {
 
                 .build();
 
-        Action Grab_clip = drive.actionBuilder(new Pose2d(47, -59, Math.toRadians(-90)))
+        Action Grab_clip = drive.actionBuilder(new Pose2d(47, -62, Math.toRadians(-90)))
                 .lineToY(-46)
                 .build();
 
@@ -182,6 +182,7 @@ public class Red_F4 extends LinearOpMode {
                 //.lineToY(-46)
                 .build();
         Action waitForIT_two = drive.actionBuilder(new Pose2d(0,0,0))
+                .lineToX(-30)
                 .waitSeconds(waitTime)
                 .build();
 
@@ -191,7 +192,7 @@ public class Red_F4 extends LinearOpMode {
 
 
 
-        waitForStart();//wait to start
+        waitForStart(); // wait to start
 
 
         //==========================  Beginning of autonomous  =====================================
@@ -199,20 +200,20 @@ public class Red_F4 extends LinearOpMode {
         //Clip preloaded specimen
         clamp.setPosition(GRAB);
         //Actions.runBlocking(delay1);
-        setLifterBoom(boom, lifter, 106, 755);
+        setLifterBoom(boom, lifter, 98 , 749);
         //while (boom.isBusy() || lifter.isBusy()){ }
         Actions.runBlocking(highBar);
         clamp.setPosition(RELEASE);
 
         //Go push strike 1 and 2 and grab strike 1
         Actions.runBlocking(pushStrike1and2);
-        setLifterBoom(boom, lifter, 0, 0);
+        setLifterBoom(boom, lifter, 38, 390);
 
-        //Actions.runBlocking(Grab_clip);
-        //setLifterBoom(boom, lifter, 100, 560);//get ready clamp strike 1
-        //while (boom.isBusy() || lifter.isBusy()){}
+        Actions.runBlocking(Grab_clip);
+        setLifterBoom(boom, lifter, 100, 560);//get ready clamp strike 1
+        while (boom.isBusy() || lifter.isBusy()){}
 
-        //clamp.setPosition(GRAB);
+        clamp.setPosition(GRAB);
         //Actions.runBlocking(waitForIT);
         //Actions.runBlocking(waitForIT);
 
@@ -224,12 +225,15 @@ public class Red_F4 extends LinearOpMode {
         //Actions.runBlocking(move_away_from_wall);
         //Actions.runBlocking(clipStrike1);
         //setLifterBoom(boom, lifter, 300, 1025);
-        //Actions.runBlocking(back_up);
+        //Actions.runBlocking(back_up);aA
         //while (boom.isBusy() || lifter.isBusy()){}
         //Thread.sleep(500);
         //clamp.setPosition(RELEASE);
+setLifterBoomAndWait(boom,lifter,0,0);
+        while (boom.isBusy() || lifter.isBusy()){
 
-
+        }
+        Actions.runBlocking(waitForIT_two);
         //Go park
 //        Actions.runBlocking(park);  //************************************************************
 
