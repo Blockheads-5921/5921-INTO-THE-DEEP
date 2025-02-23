@@ -10,7 +10,7 @@ object Constants {
         const val HIGH_CHAMBER = 680
         const val HIGH_BASKET = 1121
         const val SUBMERSIBLE_MID = 370
-        const val SUBMERSIBLE_DOWN = 219
+        const val SUBMERSIBLE_DOWN = 180
         const val PICKUP_SPIKE = 200
         const val CLIMB_POSITION = 1425
     }
@@ -20,7 +20,7 @@ object Constants {
         const val SAFE_MODE = 38
         const val HIGH_CHAMBER = 106
         const val HIGH_BASKET = 948 // 868
-        const val SUBMERSIBLE = 868
+        const val SUBMERSIBLE = 570
         const val PICKUP_SPIKE = 280
     }
 
