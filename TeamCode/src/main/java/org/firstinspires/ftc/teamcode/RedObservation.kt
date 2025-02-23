@@ -9,8 +9,6 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint
 import com.acmerobotics.roadrunner.Vector2d
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import org.firstinspires.ftc.teamcode.TankDrive.TurnAction
-import org.opencv.core.Mat
 
 @Autonomous(name = "Red Observation", group = "Autonomous")
 class RedObservation() : InheritableAutonomous() {
@@ -38,15 +36,27 @@ class RedObservation() : InheritableAutonomous() {
                     Math.toRadians(-90.0)
                 )
                 .lineToY(-15.0)
-                .splineToConstantHeading(Vector2d(47.0, -15.0), Math.toRadians(-90.0))
+                .splineToConstantHeading(Vector2d(45.0, -15.0), Math.toRadians(-90.0))
                 .lineToY(-62.0, TranslationalVelConstraint(60.0))
                 .build()
 
-            val grabClip = robot.actionBuilder(Pose2d(47.0, -62.0, Math.toRadians(-90.0)))
-                .lineToY(-46.0)
+            val backAndWaitForClip = robot.actionBuilder(Pose2d(45.0, -62.0, Math.toRadians(-90.0)))
+                .lineToY(-42.0)
+                .waitSeconds(1.5)
                 .build()
 
             val wait = robot.actionBuilder(Pose2d(0.0, 0.0, 0.0)).waitSeconds(1.0).build()
+
+            val driveToClip = robot.actionBuilder(Pose2d(45.0, -46.0, Math.toRadians(-90.0)))
+                .lineToY(-60.0)
+                .build()
+
+            val goBack = robot.actionBuilder(Pose2d(45.0, -60.0, Math.toRadians(-90.0)))
+                .splineToLinearHeading(Pose2d(0.0, -44.0, Math.toRadians(90.0)), 90.0).build()
+
+            val forward = robot.actionBuilder(Pose2d(0.0, -44.0, Math.toRadians(90.0))).lineToY(-34.0).build()
+            val backThere = robot.actionBuilder(Pose2d(0.0, -34.0, Math.toRadians(90.0))).lineToY(-40.0).build()
+            val back = robot.actionBuilder(Pose2d(0.0, -38.0, Math.toRadians(90.0))).strafeToConstantHeading(Vector2d(56.0, -60.0)).build()
         }
 
         val first: Action = SequentialAction(
@@ -59,17 +69,38 @@ class RedObservation() : InheritableAutonomous() {
                 )
             ),
             claw.open(),
-            components.pushSpikes,
-            components.grabClip,
+            ParallelAction(
+                lifterBoom.setLifterBoom(420, 0),
+                components.pushSpikes,
+            ),
+            components.backAndWaitForClip,
             lifterBoom.setLifterBoom(
                 390,
                 38
             ),
-            lifterBoom.setLifterBoom(560, 100),
-            claw.close(),
+            components.driveToClip,
+            ParallelAction(
+                claw.close(),
+                components.wait
+            ),
+            ParallelAction(
+                lifterBoom.setLifterBoom(
+                    790, 98
+                ),
+                components.goBack
+            ),
+            components.forward,
+            ParallelAction(
+                claw.open(),
+                components.wait
+            ),
+
+            components.backThere,
+            components.back,
             ParallelAction(
                 lifterBoom.setLifterBoom(0, 0),
-                components.wait
+                components.wait,
+                claw.close()
             )
         )
 

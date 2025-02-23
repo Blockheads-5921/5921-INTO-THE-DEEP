@@ -41,7 +41,6 @@ class RedNetPreload : InheritableAutonomous() {
                     .splineTo(Vector2d(-58.0, -58.0), Math.toRadians(-103.0))
                     .build()
 
-
             //Backup and drop boom
             var backup: Action = robot.actionBuilder(Pose2d(-57.0, -57.0, Math.toRadians(173.0)))
                 .setReversed(false)
