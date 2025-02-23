@@ -9,10 +9,12 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint
 import com.acmerobotics.roadrunner.Vector2d
 import com.acmerobotics.roadrunner.ftc.runBlocking
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.TankDrive.TurnAction
 import org.opencv.core.Mat
 
 @Autonomous(name = "Test", group = "Autonomous")
+@Disabled
 class Test() : InheritableAutonomous() {
     override var initialPose: Pose2d = Pose2d(8.5, -64.5, Math.toRadians(0.0))
 

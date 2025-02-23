@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Autonomous(name = "Basket", group = "Autonomous")
-//@Disabled
+@Disabled
 public class Basket extends LinearOpMode {
 
 

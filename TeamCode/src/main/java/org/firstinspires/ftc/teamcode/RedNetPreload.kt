@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode
 
 import com.acmerobotics.roadrunner.Action
+import com.acmerobotics.roadrunner.ParallelAction
 import com.acmerobotics.roadrunner.Pose2d
 import com.acmerobotics.roadrunner.SequentialAction
 import com.acmerobotics.roadrunner.TranslationalVelConstraint
@@ -30,7 +31,7 @@ class RedNetPreload : InheritableAutonomous() {
                     .lineToY(-57.0)
                     .splineToSplineHeading(
                         Pose2d(-21.0, -41.0, Math.toRadians(160.0)),
-                        Math.toRadians(125.0)
+                        Math.toRadians(141.0)
                     )
                     .build()
 
@@ -38,11 +39,12 @@ class RedNetPreload : InheritableAutonomous() {
             //Go to the basket
             var goToBasket: Action =
                 robot.actionBuilder(Pose2d(-21.0, -41.0, Math.toRadians(173.0)))
-                    .splineTo(Vector2d(-58.0, -58.0), Math.toRadians(-103.0))
+                    .splineTo(Vector2d(-58.0, -58.0), Math.toRadians(-120.0))
                     .build()
 
             //Backup and drop boom
             var backup: Action = robot.actionBuilder(Pose2d(-57.0, -57.0, Math.toRadians(173.0)))
+                .waitSeconds(1.0)
                 .setReversed(false)
                 .splineTo(Vector2d(-43.0, -43.0), Math.toRadians(-133.0))
                 .build()
@@ -64,10 +66,16 @@ class RedNetPreload : InheritableAutonomous() {
             lifterBoom.setLifterBoom((1520 * 0.738).toInt(), (2300 * 0.377).toInt()),
             components.waitLess,
             components.goToBasket,
-            claw.open(),
-            components.wait,
+            ParallelAction(
+                claw.open(),
+                components.wait,
+                ),
             components.backup,
-            lifterBoom.setLifterBoom((565 * 0.738).toInt(), (100 * .377).toInt())
+            ParallelAction(
+                lifterBoom.setLifterBoom(0, 0),
+                components.wait,
+                claw.close()
+            )
         )
 
         waitForStart()
